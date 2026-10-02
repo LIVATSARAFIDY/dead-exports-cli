@@ -1,7 +1,7 @@
 {
   "name": "dead-exports-cli",
   "version": "1.0.0",
-  "description": "Détecte les exports TypeScript jamais importés ailleurs dans le projet.",
+  "description": "Detects potentially unused TypeScript exports using static analysis.",
   "type": "module",
   "bin": {
     "dead-exports": "./dist/cli.js"
