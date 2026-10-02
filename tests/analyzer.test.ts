@@ -88,6 +88,10 @@ const testCases = [
         fixture: "export-variable-5",
         expected: ["UNUSED_URL"],
     },
+    {
+        fixture: "interface-type",
+        expected: ["UnusedInterface", "UnusedType"],
+    },
 ];
 
 describe("analyze", () => {
