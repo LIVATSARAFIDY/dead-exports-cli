@@ -371,3 +371,7 @@ The tool does not modify source files.
 
 MIT
 ```
+
+## Demo
+
+![dead-exports demo](./demo.gif)
