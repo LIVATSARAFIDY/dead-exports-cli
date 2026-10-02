@@ -371,6 +371,7 @@ The tool does not modify source files.
 
 MIT
 ```
+```
 
 ## Demo
 
