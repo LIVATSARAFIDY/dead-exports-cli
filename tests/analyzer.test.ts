@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import path from "node:path";
 
 import { analyze } from "../src/analyzer.js";
+import { Project } from "ts-morph";
 
 const testCases = [
     {
@@ -90,6 +91,10 @@ const testCases = [
     },
     {
         fixture: "interface-type",
+        expected: ["UnusedInterface", "UnusedType"],
+    },
+    {
+        fixture: "interface-type-usage",
         expected: ["UnusedInterface", "UnusedType"],
     },
 ];

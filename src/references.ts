@@ -17,7 +17,10 @@ export function analyzeReferences(
         const sourceFile = reference.getSourceFile();
         const filePath = sourceFile.getFilePath();
 
-        if (filePath === declarationFilePath) {
+        if (
+            filePath === declarationFilePath &&
+            !isInternalTypeUsage(reference)
+        ) {
             continue;
         }
 
@@ -150,4 +153,21 @@ function deduplicateReferences(
     }
 
     return Array.from(unique.values());
+}
+
+function isInternalTypeUsage(reference: Node): boolean {
+    let current: Node | undefined = reference;
+
+    while (current) {
+        if (
+            Node.isExpressionWithTypeArguments(current) ||
+            Node.isTypeReference(current)
+        ) {
+            return true;
+        }
+
+        current = current.getParent();
+    }
+
+    return false;
 }
