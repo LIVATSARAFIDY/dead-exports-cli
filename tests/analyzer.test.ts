@@ -97,6 +97,46 @@ const testCases = [
         fixture: "interface-type-usage",
         expected: ["UnusedInterface", "UnusedType"],
     },
+    {
+        fixture: "interface-property-type",
+        expected: ["UnusedInterface"],
+    },
+    {
+        fixture: "type-union",
+        expected: ["UnusedType"],
+    },
+    {
+        fixture: "type-intersection",
+        expected: ["UnusedType"],
+    },
+    {
+        fixture: "generic-constraint",
+        expected: ["UnusedInterface"],
+    },
+    {
+        fixture: "implements-interface",
+        expected: ["UnusedInterface"],
+    },
+    {
+        fixture: "function-type",
+        expected: ["UnusedType"],
+    },
+    {
+        fixture: "cross-file-type",
+        expected: ["UnusedHandler", "UnusedInterface"],
+    },
+    {
+        fixture: "false-positive-namespace",
+        expected: ["UnusedInterface", "UnusedType"],
+    },
+    {
+        fixture: "false-positive-type-operators",
+        expected: ["UnusedInterface"],
+    },
+    {
+        fixture: "false-positive-class-extends",
+        expected: ["UnusedClass"],
+    },
 ];
 
 describe("analyze", () => {
@@ -166,5 +206,30 @@ describe("analyze", () => {
         expect(reExportPaths).toContain(
             path.join(fixturePath, "src", "public-api.ts").replace(/\\/g, "/")
         );
+    });
+    it("ne confond pas deux exports portant le même nom", () => {
+        const tsconfigPath = path.resolve(
+            "fixture/false-positive-same-name/tsconfig.json"
+        );
+
+        const results = analyze({
+            tsConfigFilePath: tsconfigPath,
+        });
+
+        const unusedUser = results.find(
+            (result) =>
+                result.name === "User" &&
+                result.filePath.includes("admins.ts")
+        );
+
+        expect(unusedUser).toBeDefined();
+
+        const usedUser = results.find(
+            (result) =>
+                result.name === "User" &&
+                result.filePath.includes("users.ts")
+        );
+
+        expect(usedUser).toBeUndefined();
     });
 });

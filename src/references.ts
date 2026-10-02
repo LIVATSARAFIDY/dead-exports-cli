@@ -161,7 +161,8 @@ function isInternalTypeUsage(reference: Node): boolean {
     while (current) {
         if (
             Node.isExpressionWithTypeArguments(current) ||
-            Node.isTypeReference(current)
+            Node.isTypeReference(current) ||
+            Node.isTypeQuery(current)
         ) {
             return true;
         }
